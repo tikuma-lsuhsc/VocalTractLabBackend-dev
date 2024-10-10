@@ -20,6 +20,11 @@
 // ****************************************************************************
 
 #include "VocalTractLabBackend/Dsp.h"
+
+#ifndef _USE_MATH_DEFINES
+#define _USE_MATH_DEFINES
+#endif
+#include <math.h>
 #include <cmath>
 
 // Reference frequency for the conversion between Hz and st.
@@ -827,7 +832,7 @@ void getPolynomRoots(double *a, int &N, ComplexValue *roots)
 
   int l, j, i, m;
   bool fertig = false;
-  int E;                    // Zähler für noch ungenaue Quadratfaktoren
+  int E;                    // Zï¿½hler fï¿½r noch ungenaue Quadratfaktoren
   double p, q;              // Koeffizienten des akt. Quadratvektors
   double c[2];              // Koeffizienten des Restglieds im Hornerschema
   double temp;
@@ -835,11 +840,11 @@ void getPolynomRoots(double *a, int &N, ComplexValue *roots)
   double S, T, Sm, Tm, SNew, TNew;
   double h, k;              // Die Korrekturen
   double D;                 // Die Determinante
-  double startAngle[MAX_M]; // Wo liegt jeweils der 1. Näherungswert auf dem Einheitskreis ?
+  double startAngle[MAX_M]; // Wo liegt jeweils der 1. Nï¿½herungswert auf dem Einheitskreis ?
 
 
   // Falls der Polynomgrad N ungerade ist, dann eine weitere Nullstelle
-  // durch Multiplikation des Polynoms mit x hinzufügen ***
+  // durch Multiplikation des Polynoms mit x hinzufï¿½gen ***
 
   if ((N & 1) == 1)
   {
@@ -853,7 +858,7 @@ void getPolynomRoots(double *a, int &N, ComplexValue *roots)
   double beta[MAX_M];         // Hier werden die Indizes 1 .. M benutzt
   double gamma[MAX_M];
 
-  // Die komplexen Einheitswurzeln als Startnäherung vorgeben
+  // Die komplexen Einheitswurzeln als Startnï¿½herung vorgeben
   for (m=1; m <= M-1; m++)
   {
     startAngle[m] = (M_PI*m) / (double)M;
@@ -870,14 +875,14 @@ void getPolynomRoots(double *a, int &N, ComplexValue *roots)
   double epsilon2 = 2.0*epsilon;
   double E1 = 0.0;
   double E2 = 0.0;
-  const long MAX = 32;    // max. Anzahl der Iterationsschritte für alle Quadratfaktoren
+  const long MAX = 32;    // max. Anzahl der Iterationsschritte fï¿½r alle Quadratfaktoren
 
   fertig = false;
   l = 1;
 
   while ((l <= MAX) && (!fertig))
   {
-    E = 0;                // Zähler für die korrigierten Quadratfaktoren
+    E = 0;                // Zï¿½hler fï¿½r die korrigierten Quadratfaktoren
     j = 1;
 
     // Alle M Quadratfaktoren durchlaufen
@@ -900,7 +905,7 @@ void getPolynomRoots(double *a, int &N, ComplexValue *roots)
       // Im ersten Durchlauf von l die Ungenauigkeiten aufsummieren
       if (l == 1) { E2+= fabs(c[0]) + fabs(c[1]); }
 
-      // Weitere Korrektur ist noch nötig
+      // Weitere Korrektur ist noch nï¿½tig
       if (fabs(c[0]) + fabs(c[1]) >= epsilon2)
       {
         u = -0.5*p;
@@ -924,16 +929,16 @@ void getPolynomRoots(double *a, int &N, ComplexValue *roots)
 
         D = S*S - T*T*w;
         
-        // Determinante ist nahe Null => Startwerte abändern und nochmal!
+        // Determinante ist nahe Null => Startwerte abï¿½ndern und nochmal!
         if (fabs(D) < epsilon)
         {
-          startAngle[j]+= 0.012345;  // Winkel auf komplexem Zahlenkreis um ein paar Grad erhöhen
+          startAngle[j]+= 0.012345;  // Winkel auf komplexem Zahlenkreis um ein paar Grad erhï¿½hen
           beta[j] = 2.0*cos(startAngle[j]);
           gamma[j] = 1.0;
-          // j wird nicht erhöht !
+          // j wird nicht erhï¿½ht !
         }
         else
-        // Die Korrekturen für den j-ten Quadratfaktor können berechnet werden
+        // Die Korrekturen fï¿½r den j-ten Quadratfaktor kï¿½nnen berechnet werden
         {
           h = (c[0]*(S - u*T) - T*c[1]) / D;
           k = (c[1]*(S + u*T) + c[0]*T*q) / D;
@@ -949,9 +954,9 @@ void getPolynomRoots(double *a, int &N, ComplexValue *roots)
             epsilon2 = (epsilon*E2) / M;
           }
 
-          j++;    // Auf zum nächsten Quadratfaktor
+          j++;    // Auf zum nï¿½chsten Quadratfaktor
         }
-      }   // weitere Korrektur war nötig
+      }   // weitere Korrektur war nï¿½tig
       else { j++; }
 
     }   // Durchlauf der Quadratfaktoren
@@ -988,7 +993,7 @@ void getRealPolynomRoots(double *a, int &N, double *roots, int& numRealRoots)
 
   int l, j, i, m;
   bool fertig = false;
-  int E;                    // Zähler für noch ungenaue Quadratfaktoren
+  int E;                    // Zï¿½hler fï¿½r noch ungenaue Quadratfaktoren
   double p, q;              // Koeffizienten des akt. Quadratvektors
   double c[2];              // Koeffizienten des Restglieds im Hornerschema
   double temp;
@@ -996,11 +1001,11 @@ void getRealPolynomRoots(double *a, int &N, double *roots, int& numRealRoots)
   double S, T, Sm, Tm, SNew, TNew;
   double h, k;              // Die Korrekturen
   double D;                 // Die Determinante
-  double startAngle[MAX_M]; // Wo liegt jeweils der 1. Näherungswert auf dem Einheitskreis ?
+  double startAngle[MAX_M]; // Wo liegt jeweils der 1. Nï¿½herungswert auf dem Einheitskreis ?
 
 
   // Falls der Polynomgrad N ungerade ist, dann eine weitere Nullstelle
-  // durch Multiplikation des Polynoms mit x hinzufügen ***
+  // durch Multiplikation des Polynoms mit x hinzufï¿½gen ***
 
   if ((N & 1) == 1)
   {
@@ -1014,7 +1019,7 @@ void getRealPolynomRoots(double *a, int &N, double *roots, int& numRealRoots)
   double beta[MAX_M];         // Hier werden die Indizes 1 .. M benutzt
   double gamma[MAX_M];
 
-  // Die komplexen Einheitswurzeln als Startnäherung vorgeben
+  // Die komplexen Einheitswurzeln als Startnï¿½herung vorgeben
   for (m=1; m <= M-1; m++)
   {
     startAngle[m] = (M_PI*m) / (double)M;
@@ -1032,14 +1037,14 @@ void getRealPolynomRoots(double *a, int &N, double *roots, int& numRealRoots)
   double epsilon2 = 2.0*epsilon;
   double E1 = 0.0;
   double E2 = 0.0;
-  const long MAX = 32;    // max. Anzahl der Iterationsschritte für alle Quadratfaktoren
+  const long MAX = 32;    // max. Anzahl der Iterationsschritte fï¿½r alle Quadratfaktoren
 
   fertig = false;
   l = 1;
 
   while ((l <= MAX) && (!fertig))
   {
-    E = 0;                // Zähler für die korrigierten Quadratfaktoren
+    E = 0;                // Zï¿½hler fï¿½r die korrigierten Quadratfaktoren
     j = 1;
 
     // Alle M Quadratfaktoren durchlaufen
@@ -1062,7 +1067,7 @@ void getRealPolynomRoots(double *a, int &N, double *roots, int& numRealRoots)
       // Im ersten Durchlauf von l die Ungenauigkeiten aufsummieren
       if (l == 1) { E2+= fabs(c[0]) + fabs(c[1]); }
 
-      // Weitere Korrektur ist noch nötig
+      // Weitere Korrektur ist noch nï¿½tig
       if (fabs(c[0]) + fabs(c[1]) >= epsilon2)
       {
         u = -0.5*p;
@@ -1086,16 +1091,16 @@ void getRealPolynomRoots(double *a, int &N, double *roots, int& numRealRoots)
 
         D = S*S - T*T*w;
         
-        // Determinante ist nahe Null => Startwerte abändern und nochmal!
+        // Determinante ist nahe Null => Startwerte abï¿½ndern und nochmal!
         if (fabs(D) < epsilon)
         {
-          startAngle[j]+= 0.012345;  // Winkel auf komplexem Zahlenkreis um ein paar Grad erhöhen
+          startAngle[j]+= 0.012345;  // Winkel auf komplexem Zahlenkreis um ein paar Grad erhï¿½hen
           beta[j] = 2.0*cos(startAngle[j]);
           gamma[j] = 1.0;
-          // j wird nicht erhöht !
+          // j wird nicht erhï¿½ht !
         }
         else
-        // Die Korrekturen für den j-ten Quadratfaktor können berechnet werden
+        // Die Korrekturen fï¿½r den j-ten Quadratfaktor kï¿½nnen berechnet werden
         {
           h = (c[0]*(S - u*T) - T*c[1]) / D;
           k = (c[1]*(S + u*T) + c[0]*T*q) / D;
@@ -1111,9 +1116,9 @@ void getRealPolynomRoots(double *a, int &N, double *roots, int& numRealRoots)
             epsilon2 = (epsilon*E2) / M;
           }
 
-          j++;    // Auf zum nächsten Quadratfaktor
+          j++;    // Auf zum nï¿½chsten Quadratfaktor
         }
-      }   // weitere Korrektur war nötig
+      }   // weitere Korrektur war nï¿½tig
       else { j++; }
 
     }   // Durchlauf der Quadratfaktoren

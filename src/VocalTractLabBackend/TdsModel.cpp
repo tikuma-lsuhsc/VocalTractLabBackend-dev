@@ -27,6 +27,11 @@
 #include <iostream>
 #include <random>
 
+#ifndef _USE_MATH_DEFINES
+#define _USE_MATH_DEFINES
+#endif
+#include <math.h>
+
 // For theta = 0.505, the TDS bandwidths are about the same as those
 // of the FDS for frequencies up to 5 kHz. Above 5 kHz, the TDS resonance
 // peaks become lower than in the FDS.

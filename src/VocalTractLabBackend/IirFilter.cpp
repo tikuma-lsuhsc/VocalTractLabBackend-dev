@@ -21,6 +21,10 @@
 
 #include "VocalTractLabBackend/IirFilter.h"
 #include "VocalTractLabBackend/Dsp.h"
+#ifndef _USE_MATH_DEFINES
+#define _USE_MATH_DEFINES
+#endif
+#include <math.h>
 
 
 // ****************************************************************************
@@ -184,7 +188,7 @@ bool IirFilter::combineWithFilter(const IirFilter *f, bool cascade)
   double b3[MAX_IIR_ORDER+1];
   int i, j;
 
-  // Umwandlung der Rekursionskoeffizienten in eine Übertragungsfunktion.
+  // Umwandlung der Rekursionskoeffizienten in eine ï¿½bertragungsfunktion.
 
   for (i=0; i <= MAX_IIR_ORDER; i++)
   {
@@ -230,7 +234,7 @@ bool IirFilter::combineWithFilter(const IirFilter *f, bool cascade)
     b[i] = b3[i];
   }
 
-  // Übertragungsfunktion in Rekursionskoeffizienten verwandeln.
+  // ï¿½bertragungsfunktion in Rekursionskoeffizienten verwandeln.
   
   for (i=0; i <= MAX_IIR_ORDER; i++) { b[i] = -b[i]; }
   b[0] = 0.0;
@@ -324,7 +328,7 @@ void IirFilter::createChebyshev(double cutoffFreqRatio, bool isHighpass, int num
   const double percentRipple = 0.5;    // in %
   double ta[MAX_IIR_ORDER+1];
   double tb[MAX_IIR_ORDER+1];
-  double a0, a1, a2, b1, b2;    // Koeff., die für jede 2-Pol-Stufe des Filters berechnet werden
+  double a0, a1, a2, b1, b2;    // Koeff., die fï¿½r jede 2-Pol-Stufe des Filters berechnet werden
   double t, w, m, d, k;
   double x0, x1, x2, y1, y2;
   double kx, vx;
@@ -341,7 +345,7 @@ void IirFilter::createChebyshev(double cutoffFreqRatio, bool isHighpass, int num
   }
   if (numPoles > MAX_IIR_ORDER) { numPoles = MAX_IIR_ORDER; }
   
-  order = numPoles;     // Die Ordnung des Filters in die Klassenglobale Variable übernehmen
+  order = numPoles;     // Die Ordnung des Filters in die Klassenglobale Variable ï¿½bernehmen
 
   // Koeffizienten initialisieren.
 
@@ -360,8 +364,8 @@ void IirFilter::createChebyshev(double cutoffFreqRatio, bool isHighpass, int num
   for (pol=1; pol <= numPoles/2; pol++)
   {
     
-    // Unterprogramm, welches für jede 2-Pol-Stufe des
-    // Filters ausgeführt wird.
+    // Unterprogramm, welches fï¿½r jede 2-Pol-Stufe des
+    // Filters ausgefï¿½hrt wird.
     
     // Polposition auf dem Einheitskreis berechnen
     polReal = -cos(M_PI/(2.0*numPoles) + (M_PI*(pol-1)) / (double)numPoles);
@@ -381,7 +385,7 @@ void IirFilter::createChebyshev(double cutoffFreqRatio, bool isHighpass, int num
       polImag = polImag*(0.5*(exp(vx) + exp(-vx))) / kx;
     }
 
-    // Überführung vom s- in den z-Bereich
+    // ï¿½berfï¿½hrung vom s- in den z-Bereich
     t = 2.0*tan(0.5);
     w = 2.0*M_PI*cutoffFreqRatio;
     m = polReal*polReal + polImag*polImag;

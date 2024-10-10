@@ -22,6 +22,10 @@
 #include "VocalTractLabBackend/VoiceQualityEstimator.h"
 #include "VocalTractLabBackend/Constants.h"
 #include <cstdio>
+#ifndef _USE_MATH_DEFINES
+#define _USE_MATH_DEFINES
+#endif
+#include <math.h>
 
 const double VoiceQualityEstimator::SLICE_STEP_S = 0.01;    // = 10 ms
 const double VoiceQualityEstimator::MIN_PEAK_SLOPE = -10.0;
